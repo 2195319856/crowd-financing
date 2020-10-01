@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.erp.bean.Job" table="job_info">
+		<id name="id" column="id">
+			<!-- 主键生成策略 -->
+			<generator class="native"></generator>
+		</id>
+		<!-- 2、用户字段 -->
+		<property name="Internal_PN"></property>
+		<property name="Layer_Num"></property>
+		<property name="Stack_Up"></property>
+		<property name="Utilization"></property>
+		<property name="Sub_Size_X"></property>
+		<property name="Sub_Size_Y"></property>
+		<property name="Sub_Up"></property>
+		<property name="PNL_Size_X"></property>
+		<property name="PNL_Size_Y"></property>
+		<property name="PNL_Up"></property>
+		<property name="Date_Fmat"></property>
+		<property name="Internal_Level"></property>
+		<property name="EMI"></property>
+		<property name="Hot_Bar"></property>
+		<property name="ZIF"></property>
+		<property name="WB"></property>
+		<property name="Honeycomb"></property>
+		<property name="Comp_0201"></property>
+		<property name="Comp_01005"></property>
+		<property name="BGA_Pitch"></property>
+		<property name="DCR"></property>
+		<property name="Impedance"></property>
+		<property name="Loss"></property>
+		<property name="ET_Type"></property>
+		<property name="STIFF_ET"></property>
+		<property name="NPI"></property>
+		<property name="MI_ENG"></property>
+		<property name="CAM_ENG"></property>
+		<property name="MI_TEL"></property>
+		<property name="CAM_TEL"></property>
+		<property name="Input_User"></property>
+		<property name="Input_User_CN"></property>
+		<property name="Date_Time"></property>
+		<property name="Status"></property>
+
+
+
+	</class>
+	
+	
+	
+	
+	
+</hibernate-mapping>

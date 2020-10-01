@@ -1,11 +1,7 @@
 <template >
     <div  style="width:95%;text-align: left;border:1px solid #EBEEF5;border-radius: 4px;padding: 9px">
-        <div style="margin: -9px">
-
-            <el-tag style="width: 100%;height:50px;font-size: 24px;line-height: 50px" > <i class="el-icon-user"></i>用户维护</el-tag>
-        </div>
-<!--    搜索-->
-        <div style="margin-top: 29px">
+        <!--    搜索-->
+        <div>
             <el-form :inline="true" :model="formInline" class="demo-form-inline">
                 <el-form-item label="查询条件">
                     <el-input v-model="formInline.user" placeholder="查询条件"></el-input>
@@ -19,22 +15,16 @@
                 <el-button type="danger" round>删除</el-button>
             </div>
         </div>
-<!--    表格-->
+        <!--    表格-->
         <div>
             <el-table :data="tableData" border  width="100%"  @selection-change="handleSelectionChange">
-                <el-table-column
-                        type="index"
-                        :index="indexMethod">
-                </el-table-column>
                 <el-table-column type="selection" width="55">
                 </el-table-column>
-                <el-table-column  prop="date" label="账号" min-width="10%">
+                <el-table-column  prop="date" label="广告描述" min-width="10%">
                 </el-table-column>
-                <el-table-column prop="name" label="姓名" min-width="10%">
+                <el-table-column prop="name" label="说明" min-width="10%">
                 </el-table-column>
-                <el-table-column prop="zip" label="邮编" min-width="10%">
-                </el-table-column>
-                <el-table-column prop="zip" label="创建日期" min-width="10%">
+                <el-table-column prop="zip" label="	状态" min-width="10%">
                 </el-table-column>
                 <el-table-column  label="操作" width="170px">
                     <template >
@@ -45,7 +35,7 @@
                 </el-table-column>
             </el-table>
         </div>
-<!--        分页-->
+        <!--        分页-->
         <div style="margin-top: 20px;text-align: center">
             <el-pagination
                     background
@@ -79,11 +69,11 @@
         <el-dialog title="分配权限" :visible.sync="dialogFormVisibleRole"  :close-on-click-modal="false">
             <template>
                 <el-transfer :titles="['未分配权限', '已分配权限']"
-                        filterable
-                        :filter-method="filterMethod"
-                        filter-placeholder="请输入权限拼音"
-                        v-model="value"
-                        :data="data">
+                             filterable
+                             :filter-method="filterMethod"
+                             filter-placeholder="请输入权限拼音"
+                             v-model="value"
+                             :data="data">
                 </el-transfer>
             </template>
             <div slot="footer" class="dialog-footer">
@@ -100,7 +90,7 @@
 
     export default {
 
-        name: "user",
+        name: "advertisingManagement",
         methods: {
             handleSelectionChange(val) {
                 this.multipleSelection = val;
@@ -109,9 +99,6 @@
             onSubmit() {
                 console.log('submit!');
             },
-            indexMethod(index) {
-                return index +1;
-            }
 
         },
 

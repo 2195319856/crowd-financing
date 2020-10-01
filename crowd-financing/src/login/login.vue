@@ -7,9 +7,9 @@
             <el-col>
                 <label style="font-size: 29px">后台管理系统</label>
                 <!--               可清理文本框-->
-                <el-input  style="margin-top: 10px" placeholder="请输入用户名" v-model="user.usrName" clearable ><i slot="prefix" class="el-input__icon el-icon-user"></i></el-input>
+                <el-input  style="margin-top: 10px" placeholder="请输入用户名" v-model="user.loginacct" clearable ><i slot="prefix" class="el-input__icon el-icon-user"></i></el-input>
                 <!--               密码框-->
-                <el-input  style="margin-top: 10px" placeholder="请输入密码" v-model="user.usrPassword" show-password><i slot="prefix" class="el-input__icon el-icon-lock" ></i></el-input>
+                <el-input  style="margin-top: 10px" placeholder="请输入密码" v-model="user.password" show-password><i slot="prefix" class="el-input__icon el-icon-lock" ></i></el-input>
                 <el-button type="primary" round style="margin-top: 10px;width: 300px" @click="login">登录</el-button>
             </el-col>
         </div>
@@ -20,28 +20,29 @@
     export default {
         name: "login",
         data:()=>({
-            user:{ usrName:'root',
-                usrPassword:'root',},
+            user:{ loginacct:'aaa',
+                password:'123456',},
         }),
-        methods:{
-            login(){
-                let user=this.user;
-                this.axios.post("http://localhost:8080/user/login", {"username":user.usrName,"password":user.usrPassword}).then(
-                    (response) =>{
-                        if (response.data.username==user.usrName&&response.data.password==user.usrPassword){
-                            sessionStorage.setItem("user",JSON.stringify(response.data))
-                            this.$router.push({name:"index"})
-                        }else {
-                            this.$message({
-                                message: "账号或密码错误",
-                                type: 'success'
-                            });
-                        }
+        methods: {
+            login() {
+                this.axios.post("http://localhost:8002/api/admin/admin/login",this.user).then((data)=>{
+                    if (data.data.state==200){
+                        sessionStorage.setItem("user",JSON.stringify(data.data.data))
+                        sessionStorage.setItem("token",data.data.token)
+                        this.$router.push({name:"index"})
+                        this.$message({
+                            message: "登录成功",
+                            type: 'success'
+                        });
+                    }else {
+                        this.$message({
+                            message: "账号或密码错误",
+                            type: 'success'
+                        });
                     }
-                ).catch((error) =>{
-                        alert(error)
-                    }
-                )
+                }).catch((error)=>{
+                    alert(error)
+                })
             }
         }
     }

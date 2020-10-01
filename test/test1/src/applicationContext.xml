@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-4.3.xsd
+	http://www.springframework.org/schema/aop
+	http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+	http://www.springframework.org/schema/tx
+	http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+
+
+	<!-- 配置数据源 -->
+	<bean id="dataSource"
+		class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<!-- 驱动 -->
+		<property name="driverClass" value="com.mysql.jdbc.Driver"></property>
+		<!-- 链接地址 -->
+		<property name="jdbcUrl"
+			value="jdbc:mysql://localhost:3306/wx?characterEncoding=utf-8"></property>
+		<!-- 用户名 -->
+		<property name="user" value="root"></property>
+		<!-- 密码 -->
+		<property name="password" value="root"></property>
+		<!-- 连接池的大小 -->
+		<property name="initialPoolSize" value="10"></property>
+		<!-- 最大链接数 有个默认值是15 -->
+		<property name="maxPoolSize" value="30"></property>
+		<!-- 最小连接数数 有个默认值 3 -->
+		<property name="minPoolSize" value="3"></property>
+		<!-- 当链接池中的链接耗尽时，c3p0能够一次性获取的连接数 默认值是 3 -->
+		<property name="acquireIncrement" value="3"></property>
+		<!-- 最大的空闲时间 特殊的值 0 表示链接永远不会丢失 -->
+		<property name="maxIdleTime" value="1800"></property>
+	</bean>
+
+
+	<!-- 配置sessionFactory -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="hibernateProperties">
+			<props>
+				<!-- 配置数据库的方言 -->
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+				<!-- 显示SQL语句 -->
+				<prop key="hibernate.show_sql">true</prop>
+				<!-- 格式化SQL语句 -->
+				<prop key="hibernate.format_sql">true</prop>
+				<!-- hibernate可以自动创建表格 update 表示如果表存在则更新，不存在则创建 -->
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+			</props>
+		</property>
+		<property name="mappingResources">
+			<list>
+				<value>com/erp/bean/user.hib.xml</value>
+				<value>com/erp/bean/Platting.hib.xml</value>
+				<value>com/erp/bean/Hole.hib.xml</value>
+				<value>com/erp/bean/Job.hib.xml</value>
+				<value>com/erp/bean/ink.hib.xml</value>
+				<value>com/erp/bean/Impedance.hib.xml</value>
+				<value>com/erp/bean/Signal.hib.xml</value>
+				<value>com/erp/bean/Die.hib.xml</value>
+				<value>com/erp/bean/Silk.hib.xml</value>
+				<value>com/erp/bean/Surface.hib.xml</value>
+				<value>com/erp/bean/SubMat.hib.xml</value>
+				<value>com/erp/bean/Fmain.hib.xml</value>
+				
+
+			</list>
+		</property>
+	</bean>
+	<bean id="hibernateTemplate"
+		class="org.springframework.orm.hibernate5.HibernateTemplate">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+	<!-- 注入dao -->
+	<bean id="userDao" class="com.erp.dao.UserDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+	</bean>
+
+	<bean id="holeDao" class="com.erp.dao.HoleDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+	</bean>
+
+	<bean id="plattingDao" class="com.erp.dao.PlattingDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+	</bean>
+
+	<bean id="jobDao" class="com.erp.dao.JobDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+	</bean>
+	<bean id="inkDao" class="com.erp.dao.InkDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+	</bean>
+	<bean id="impedanceDao" class="com.erp.dao.ImpedanceDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+	</bean>
+	<bean id="signalDao" class="com.erp.dao.SignalDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+	</bean>
+	<bean id="dieDao" class="com.erp.dao.DieDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+	</bean>
+	<bean id="silkDao" class="com.erp.dao.SilkDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+	</bean>
+	<bean id="surfaceDao" class="com.erp.dao.SurfaceDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+	</bean>
+	<bean id="subMatDao" class="com.erp.dao.SubMatDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+	</bean>
+     <bean id="fmainDao" class="com.erp.dao.FmainDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+	</bean>
+
+	<!-- 注入service -->
+	<bean id="userService" class="com.erp.service.UserService">
+		<property name="userDao" ref="userDao"></property>
+	</bean>
+
+	<bean id="holeService" class="com.erp.service.HoleService">
+		<property name="holeDao" ref="holeDao"></property>
+	</bean>
+
+	<bean id="plattingService" class="com.erp.service.PlattingService">
+		<property name="plattingDao" ref="plattingDao"></property>
+	</bean>
+
+	<bean id="jobService" class="com.erp.service.JobService">
+		<property name="jobDao" ref="jobDao"></property>
+	</bean>
+
+	<bean id="inkService" class="com.erp.service.InkService">
+		<property name="inkDao" ref="inkDao"></property>
+	</bean>
+	<bean id="impedanceService"
+		class="com.erp.service.ImpedanceService">
+		<property name="impedanceDao" ref="impedanceDao"></property>
+	</bean>
+	<bean id="signalService" class="com.erp.service.SignalService">
+		<property name="signalDao" ref="signalDao"></property>
+	</bean>
+	<bean id="dieService" class="com.erp.service.DieService">
+		<property name="dieDao" ref="dieDao"></property>
+	</bean>
+	<bean id="silkService" class="com.erp.service.SilkService">
+		<property name="silkDao" ref="silkDao"></property>
+	</bean>
+	<bean id="surfaceService" class="com.erp.service.SurfaceService">
+		<property name="surfaceDao" ref="surfaceDao"></property>
+	</bean>
+	<bean id="subMatService" class="com.erp.service.SubMatService">
+		<property name="subMatDao" ref="subMatDao"></property>
+	</bean>
+	<bean id="fmainService" class="com.erp.service.FmainService">
+		<property name="fmainDao" ref="fmainDao"></property>
+	</bean>
+
+	<!-- 配置一个事务管理对象 -->
+	<bean id="myHibernateTransactionManager"
+		class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+	<!--2.配置通知 -->
+	<tx:advice id="txAdvice"
+		transaction-manager="myHibernateTransactionManager">
+		<tx:attributes>
+			<tx:method name="reg" propagation="REQUIRED" />
+			<tx:method name="add*" propagation="REQUIRED" />
+			<tx:method name="del*" propagation="REQUIRED" />
+			<tx:method name="update*" propagation="REQUIRED" />
+			<tx:method name="save*" propagation="REQUIRED" />
+			<tx:method name="*" propagation="SUPPORTS" read-only="true" />
+		</tx:attributes>
+	</tx:advice>
+
+	<!--3.把通知应用到切入点 -->
+	<aop:config>
+		<aop:pointcut id="allServiceMethods"
+			expression="execution(* com.erp.service.*.*(..))" />
+		<aop:advisor advice-ref="txAdvice"
+			pointcut-ref="allServiceMethods"></aop:advisor>
+	</aop:config>
+</beans>
