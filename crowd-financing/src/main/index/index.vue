@@ -15,21 +15,21 @@
                                     <div  v-for="(me,i) in menu" :key="i">
                                         <div v-if="me.children==''">
                                             <router-link :to="me.url">
-                                                 <el-menu-item :index="i">
+                                                 <el-menu-item :index="i.toString()">
                                                     <i class="el-icon-s-home"></i>
                                                     <span slot="title">{{me.menuname}}</span>
                                                  </el-menu-item>
                                             </router-link>
                                          </div>
                                         <div v-if="me.children!=''">
-                                            <el-submenu :index="i" >
+                                            <el-submenu :index="i.toString()" >
                                                 <template slot="title">
                                                     <i class="el-icon-s-operation"></i>
                                                     <span>{{me.menuname}}</span>
                                                 </template>
-                                                <el-menu-item-group style="margin-left: 20px" v-for="(ms,j) in me.children" :key="j">
+                                                <el-menu-item-group v-for="(ms,j) in me.children" :key="j">
                                                     <router-link :to="ms.url">
-                                                        <el-menu-item :index="i+'-'+j">
+                                                        <el-menu-item  style="padding-left: 70px"  :index="i.toString()+'-'+j.toString()">
                                                            <i class="el-icon-s-custom"></i>
                                                              <span>{{ms.menuname}}</span>
                                                         </el-menu-item>

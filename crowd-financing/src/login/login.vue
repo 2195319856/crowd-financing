@@ -20,8 +20,8 @@
     export default {
         name: "login",
         data:()=>({
-            user:{ loginacct:'aaa',
-                password:'123456',},
+            user:{ loginacct:'root',
+                password:'root',},
         }),
         methods: {
             login() {
@@ -35,13 +35,10 @@
                             type: 'success'
                         });
                     }else {
-                        this.$message({
-                            message: "账号或密码错误",
-                            type: 'success'
-                        });
+                        this.$message.error('账号或密码错误');
                     }
                 }).catch((error)=>{
-                    alert(error)
+                    this.$message.error('错误'+error);
                 })
             }
         }
